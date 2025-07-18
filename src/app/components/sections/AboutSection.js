@@ -121,7 +121,9 @@ export default function AboutSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold mb-6">Hi, I'm Mohed Abbas 👋</h3>
+            <h3 className="text-2xl font-bold mb-6">
+              {"Hi, I'm Mohed Abbas 👋"}
+            </h3>
             <div className="space-y-4 text-gray-600 dark:text-gray-400">
               <p>
                 {`I'm a Full Stack Developer with over 2 years of experience in
