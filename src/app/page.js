@@ -2,6 +2,8 @@ import Navbar from "@/components/ui/Navbar";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import SkillsSection from "@/components/sections/SkillsSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Home() {
@@ -13,11 +15,13 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <SkillsSection />
+        <ProjectsSection />
+        <ExperienceSection />
 
-        {/* Placeholder for other sections */}
+        {/* Placeholder for contact section */}
         <div className="h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a]">
           <p className="text-2xl text-gray-400">
-            Projects Section Coming Next...
+            Contact Section Coming Next...
           </p>
         </div>
       </main>

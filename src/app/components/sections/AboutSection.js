@@ -26,40 +26,11 @@ const StatCard = ({ icon: Icon, value, label, delay }) => (
   </motion.div>
 );
 
-// Journey timeline item
-const TimelineItem = ({ year, title, description, index }) => (
-  <motion.div
-    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    viewport={{ once: true }}
-    className={`flex items-center gap-4 ${
-      index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-    }`}
-  >
-    <div className={`flex-1 ${index % 2 === 0 ? "text-right" : "text-left"}`}>
-      <h4 className="font-semibold text-lg mb-1">{title}</h4>
-      <p className="text-gray-600 dark:text-gray-400 text-sm">{description}</p>
-    </div>
-    <div className="relative">
-      <div className="w-4 h-4 bg-blue-600 rounded-full" />
-      {index !== 2 && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-0.5 h-20 bg-gray-300 dark:bg-gray-700" />
-      )}
-    </div>
-    <div className="flex-1">
-      <span className="text-blue-600 dark:text-blue-400 font-medium">
-        {year}
-      </span>
-    </div>
-  </motion.div>
-);
-
 export default function AboutSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const stats = [
-    { icon: Calendar, value: "2+", label: "Years Experience" },
+    { icon: Calendar, value: "3+", label: "Years Experience" },
     { icon: Code2, value: "50+", label: "Projects Completed" },
     { icon: Coffee, value: "1000+", label: "Cups of Coffee" },
     { icon: Rocket, value: "15+", label: "Technologies" },
@@ -213,22 +184,6 @@ export default function AboutSection() {
             <StatCard key={stat.label} {...stat} delay={index * 0.1} />
           ))}
         </div>
-
-        {/* Journey Timeline */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
-        >
-          <h3 className="text-2xl font-bold text-center mb-12">My Journey</h3>
-          <div className="space-y-8">
-            {journey.map((item, index) => (
-              <TimelineItem key={item.year} {...item} index={index} />
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useState, useRef } from "react";
 import {
   Code2,
   Database,
@@ -20,17 +20,20 @@ import {
 // Skill card component
 const SkillCard = ({ skill, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const isCardInView = useInView(cardRef, { amount: 0.2, once: true });
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.2 }}
       whileHover={{ y: -5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+      className="group relative bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col"
     >
       {/* Background gradient on hover */}
       <motion.div
@@ -40,44 +43,47 @@ const SkillCard = ({ skill, index }) => {
         transition={{ duration: 0.3 }}
       />
 
-      {/* Icon */}
-      <motion.div
-        className="relative z-10 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors"
-        animate={{ rotate: isHovered ? 360 : 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <skill.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-      </motion.div>
+      <div className="flex-1 flex flex-col">
+        {/* Icon */}
+        <motion.div
+          className="relative z-10 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors"
+          animate={{ rotate: isHovered ? 360 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <skill.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        </motion.div>
 
-      {/* Content */}
-      <h3 className="relative z-10 text-lg font-semibold mb-2">{skill.name}</h3>
-      <p className="relative z-10 text-sm text-gray-600 dark:text-gray-400 mb-4">
-        {skill.description}
-      </p>
+        {/* Content */}
+        <h3 className="relative z-10 text-lg font-semibold mb-2">
+          {skill.name}
+        </h3>
+        <p className="relative z-10 text-sm text-gray-600 dark:text-gray-400 mb-4">
+          {skill.description}
+        </p>
 
-      {/* Skills list */}
-      <div className="relative z-10 flex flex-wrap gap-2">
-        {skill.items.map((item, idx) => (
-          <motion.span
-            key={item}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.05 + idx * 0.02 }}
-            viewport={{ once: true }}
-            className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-700 dark:text-gray-300"
-          >
-            {item}
-          </motion.span>
-        ))}
+        {/* Skills list */}
+        <div className="relative z-10 flex flex-wrap gap-2">
+          {skill.items.map((item, idx) => (
+            <motion.span
+              key={item}
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.05 + idx * 0.02 }}
+              viewport={{ once: true }}
+              className="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-700 dark:text-gray-300"
+            >
+              {item}
+            </motion.span>
+          ))}
+        </div>
       </div>
 
-      {/* Progress bar */}
+      {/* Progress bar triggered by card visibility */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500"
         initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
+        animate={{ scaleX: isCardInView ? 1 : 0 }}
         transition={{ duration: 1, delay: index * 0.1 }}
-        viewport={{ once: true }}
         style={{ originX: 0 }}
       />
     </motion.div>
@@ -249,7 +255,7 @@ export default function SkillsSection() {
         </motion.div>
 
         {/* Skills grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20 items-stretch">
           {skillCategories.map((skill, index) => (
             <SkillCard key={skill.name} skill={skill} index={index} />
           ))}
@@ -302,7 +308,7 @@ export default function SkillsSection() {
 
       {/* CSS for 3D flip effect */}
       <style jsx>{`
-        .backface-hidden {
+        。 .backface-hidden {
           backface-visibility: hidden;
         }
         .rotate-y-180 {
