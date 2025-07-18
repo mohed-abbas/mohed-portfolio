@@ -26,7 +26,7 @@ export default function HeroHeader() {
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
             whileHover={{ scale: 1.05 }}
           >
-            Let's talk →
+            {"Let's talk →"}
           </motion.a>
         </div>
       </div>

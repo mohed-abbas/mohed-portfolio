@@ -124,24 +124,24 @@ export default function AboutSection() {
             <h3 className="text-2xl font-bold mb-6">Hi, I'm Mohed Abbas 👋</h3>
             <div className="space-y-4 text-gray-600 dark:text-gray-400">
               <p>
-                I'm a Full Stack Developer with over 2 years of experience in
+                {`I'm a Full Stack Developer with over 2 years of experience in
                 creating dynamic web applications and specialized Learning
                 Management System plugins. My journey in tech started with a
                 curiosity about how things work on the web, and it has evolved
-                into a passion for building impactful digital solutions.
+                into a passion for building impactful digital solutions.`}
               </p>
               <p>
-                I specialize in PHP and JavaScript ecosystems, with deep
+                {`I specialize in PHP and JavaScript ecosystems, with deep
                 expertise in frameworks like Laravel, React, and Next.js. My
                 experience with Moodle plugin development has taught me the
                 importance of creating user-friendly educational tools that
-                enhance the learning experience.
+                enhance the learning experience.`}
               </p>
               <p>
-                When I'm not coding, you'll find me exploring new technologies,
+                {`When I'm not coding, you'll find me exploring new technologies,
                 contributing to open-source projects, or enjoying a good cup of
                 coffee while solving complex problems. I believe in continuous
-                learning and staying updated with the latest industry trends.
+                learning and staying updated with the latest industry trends.`}
               </p>
             </div>
 
@@ -152,7 +152,7 @@ export default function AboutSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Let's Work Together
+              {"Let's Work Together"}
               <Rocket size={18} />
             </motion.a>
           </motion.div>
