@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Code2, Coffee, Rocket } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { ParallaxLayer } from "@/components/ui/Parallax";
 
 // Stats component
 const StatCard = ({ icon: Icon, value, label, delay }) => (
@@ -28,9 +29,17 @@ const StatCard = ({ icon: Icon, value, label, delay }) => (
 
 export default function AboutSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
 
   const stats = [
-    { icon: Calendar, value: "3+", label: "Years Experience" },
+    { icon: Calendar, value: "2+", label: "Years Experience" },
     { icon: Code2, value: "50+", label: "Projects Completed" },
     { icon: Coffee, value: "1000+", label: "Cups of Coffee" },
     { icon: Rocket, value: "15+", label: "Technologies" },
@@ -59,12 +68,19 @@ export default function AboutSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="about"
       className="py-20 bg-white dark:bg-[#0a0a0a] relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+      {/* Background decoration with parallax */}
+      <motion.div
+        className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"
+        style={{ y: y, scale: scale }}
+      />
+      <motion.div
+        className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
+        style={{ y: useTransform(scrollYProgress, [0, 1], [-100, 100]) }}
+      />
 
       <div className="max-width section-padding relative">
         {/* Section header */}
@@ -92,29 +108,27 @@ export default function AboutSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold mb-6">
-              {"Hi, I'm Mohed Abbas 👋"}
-            </h3>
+            <h3 className="text-2xl font-bold mb-6">Hi, I'm Mohed Abbas 👋</h3>
             <div className="space-y-4 text-gray-600 dark:text-gray-400">
               <p>
-                {`I'm a Full Stack Developer with over 2 years of experience in
+                I'm a Full Stack Developer with over 2 years of experience in
                 creating dynamic web applications and specialized Learning
                 Management System plugins. My journey in tech started with a
                 curiosity about how things work on the web, and it has evolved
-                into a passion for building impactful digital solutions.`}
+                into a passion for building impactful digital solutions.
               </p>
               <p>
-                {`I specialize in PHP and JavaScript ecosystems, with deep
+                I specialize in PHP and JavaScript ecosystems, with deep
                 expertise in frameworks like Laravel, React, and Next.js. My
                 experience with Moodle plugin development has taught me the
                 importance of creating user-friendly educational tools that
-                enhance the learning experience.`}
+                enhance the learning experience.
               </p>
               <p>
-                {`When I'm not coding, you'll find me exploring new technologies,
+                When I'm not coding, you'll find me exploring new technologies,
                 contributing to open-source projects, or enjoying a good cup of
                 coffee while solving complex problems. I believe in continuous
-                learning and staying updated with the latest industry trends.`}
+                learning and staying updated with the latest industry trends.
               </p>
             </div>
 
@@ -125,7 +139,7 @@ export default function AboutSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {"Let's Work Together"}
+              Let's Work Together
               <Rocket size={18} />
             </motion.a>
           </motion.div>

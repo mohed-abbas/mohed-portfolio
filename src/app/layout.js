@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,8 +43,10 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
         <ThemeProvider>
-          {/* Theme provider wraps the entire app */}
-          <main className="relative min-h-screen">{children}</main>
+          <SmoothScrollProvider>
+            {/* Theme provider wraps the entire app */}
+            <main className="relative min-h-screen">{children}</main>
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

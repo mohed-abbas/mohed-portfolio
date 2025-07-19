@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { projects, categories } from "@/lib/data/projects";
+import { ParallaxSection, ParallaxElement } from "@/components/ui/Parallax";
 
 // Project card component
 const ProjectCard = ({ project, index }) => {
@@ -21,22 +22,21 @@ const ProjectCard = ({ project, index }) => {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
       transition={{
-        duration: 0.4,
-        delay: index * 0.05,
+        duration: 0.3,
+        ease: "easeOut",
         layout: {
-          type: "spring",
-          bounce: 0.3,
-          duration: 0.6,
+          duration: 0.3,
+          ease: "easeInOut",
         },
       }}
-      whileHover={{ y: -10, transition: { duration: 0.2 } }}
+      whileHover={{ y: -8, transition: { duration: 0.2, ease: "easeOut" } }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+      className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
     >
       {/* Featured badge */}
       {project.featured && (
@@ -186,29 +186,39 @@ export default function ProjectsSection() {
       id="projects"
       className="py-20 bg-white dark:bg-[#0a0a0a] relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-6xl">
+      {/* Background decoration with parallax */}
+      <ParallaxElement
+        speed={0.3}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-6xl"
+      >
         <div className="absolute top-20 left-0 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl" />
+      </ParallaxElement>
+      <ParallaxElement
+        speed={-0.3}
+        className="absolute bottom-0 right-0 w-full h-full max-w-6xl"
+      >
         <div className="absolute bottom-20 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
-      </div>
+      </ParallaxElement>
 
       <div className="max-width section-padding relative">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Featured <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            A selection of my recent work showcasing various technologies and
-            problem-solving approaches
-          </p>
-        </motion.div>
+        {/* Section header with parallax */}
+        <ParallaxSection offset={30}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Featured <span className="text-gradient">Projects</span>
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              A selection of my recent work showcasing various technologies and
+              problem-solving approaches
+            </p>
+          </motion.div>
+        </ParallaxSection>
 
         {/* Category filters */}
         <motion.div
@@ -229,21 +239,20 @@ export default function ProjectsSection() {
         </motion.div>
 
         {/* Projects grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial={false}
+        >
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <ProjectCard
+                key={`${activeCategory}-${project.id}`}
+                project={project}
+                index={index}
+              />
             ))}
-          </motion.div>
-        </AnimatePresence>
+          </AnimatePresence>
+        </motion.div>
 
         {/* Call to action */}
         <motion.div
@@ -254,8 +263,8 @@ export default function ProjectsSection() {
           className="text-center mt-16"
         >
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Have a project in mind? Let&apos;s work together to bring your ideas
-            to life
+            Have a project in mind? Let's work together to bring your ideas to
+            life
           </p>
           <motion.a
             href="#contact"

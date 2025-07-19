@@ -60,6 +60,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Optimize for parallax */
+body {
+  overflow-x: hidden;
+}
+
+/* GPU acceleration for transforms */
+.parallax-element {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

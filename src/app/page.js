@@ -4,6 +4,8 @@ import AboutSection from "@/components/sections/AboutSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
+import ContactSection from "@/components/sections/ContactSection";
+import Footer from "@/components/ui/Footer";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Home() {
@@ -17,14 +19,9 @@ export default function Home() {
         <SkillsSection />
         <ProjectsSection />
         <ExperienceSection />
-
-        {/* Placeholder for contact section */}
-        <div className="h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a]">
-          <p className="text-2xl text-gray-400">
-            Contact Section Coming Next...
-          </p>
-        </div>
+        <ContactSection />
       </main>
+      <Footer />
     </>
   );
 }
