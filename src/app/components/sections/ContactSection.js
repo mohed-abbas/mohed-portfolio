@@ -202,8 +202,9 @@ export default function ContactSection() {
             Let's <span className="text-gradient">Connect</span>
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind? I'd love to hear about it. Let's create
-            something amazing together.
+            {
+              "Have a project in mind? I'd love to hear about it. Let's create something amazing together."
+            }
           </p>
         </motion.div>
 
@@ -320,7 +321,7 @@ export default function ContactSection() {
                   className="flex items-center gap-2 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-4 py-3 rounded-lg"
                 >
                   <CheckCircle size={20} />
-                  Message sent successfully! I'll get back to you soon.
+                  {`Message sent successfully! I'll get back to you soon.`}
                 </motion.div>
               )}
 
