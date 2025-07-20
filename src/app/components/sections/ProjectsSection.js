@@ -263,8 +263,7 @@ export default function ProjectsSection() {
           className="text-center mt-16"
         >
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Have a project in mind? Let's work together to bring your ideas to
-            life
+            {`Have a project in mind? Let's work together to bring your ideas to life!`}
           </p>
           <motion.a
             href="#contact"
